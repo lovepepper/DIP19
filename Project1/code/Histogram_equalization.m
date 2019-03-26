@@ -19,5 +19,8 @@ end
 
     function [output2] = hist_equal(input_channel)
     %you should complete this sub-function
+    temp = input_channel;
+    imhist(temp);
+    output2 = histeq(input_channel);
     end
 end
