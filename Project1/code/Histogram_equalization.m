@@ -1,4 +1,4 @@
-function [output] = Histogram_equalization(input_image, method)
+function [output] = Histogram_equalization(input_image, varargin)
 %first test the image is a RGB or gray image
 if numel(size(input_image)) == 3
     %this is a RGB image
@@ -7,38 +7,30 @@ if numel(size(input_image)) == 3
     r=input_image(:,:,1);
     g=input_image(:,:,2);
     b=input_image(:,:,3);
-    switch method
+    switch varargin{1}
         case 1
             r1 = hist_equal(r);
             g1 = hist_equal(g);
             b1 = hist_equal(b);
             output = cat(3,r1,g1,b1);
         case 2
-            [row2, col2] = size(r);
             Hr = imhist(r);
             Hg = imhist(g);
             Hb = imhist(b);
             H2 = round((Hr + Hg + Hb) / 3);
-            f2 = zeros(256, 1);
-            for i2 = 1 : 256
-                if(i2 == 1)
-                    f2(i2) = H2(i2);
-                else
-                    f2(i2) = f2(i2 - 1) + H2(i2);
-                end
-            end
-            t2 = 255 * f2 / (row2 * col2);
-            r2 = zeros(row2, col2);
-            g2 = zeros(row2, col2);
-            b2 = zeros(row2, col2);
-            for i2 = 1 : row2
-                for j2 = 1 : col2
-                    r2(i2, j2) = round(t2(r(i2, j2) + 1));
-                    g2(i2, j2) = round(t2(g(i2, j2) + 1));
-                    b2(i2, j2) = round(t2(b(i2, j2) + 1));
-                end
-            end
-            output = uint8(cat(3,r2,g2,b2));
+            r2 = hist_equal(r, H2);
+            g2 = hist_equal(g, H2);
+            b2 = hist_equal(b, H2);
+            output = cat(3,r2,g2,b2);
+        case 3
+            hsvimg = rgb2hsv(input_image);
+            v = hsvimg(:,:,3);
+            v = uint8(v * 255);
+            v = hist_equal(v);
+            v = double(v)/255;
+            output = hsvimg;
+            output(:,:,3) = v;
+            output = hsv2rgb(output);
     end
         
 else
@@ -47,10 +39,14 @@ else
     
 end
 
-    function [output2] = hist_equal(input)
+    function [output2] = hist_equal(input_channel, varargin)
     %you should complete this sub-function
-    [row, col] = size(input);
-    H = imhist(input);
+    [row, col] = size(input_channel);
+    if nargin == 1
+        H = imhist(input_channel);
+    elseif nargin == 2
+        H = varargin{1};
+    end
     f = zeros(256, 1);
     for i = 1 : 256
         if(i == 1)
@@ -63,7 +59,7 @@ end
     output2 = zeros(row, col);
     for i = 1 : row
         for j = 1 : col
-            output2(i, j) = round(t(input(i, j) + 1));
+            output2(i, j) = round(t(input_channel(i, j) + 1));
         end
     end
     output2 = uint8(output2);
