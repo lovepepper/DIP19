@@ -1,5 +1,10 @@
 %test histeq
-I = imread('color1.png');
+% I = imread('color0.jpg');
+% I = imread('color1.png');
+I = imread('color2.jpeg');
+% I = imread('gray0.jpg');
+% I = imread('gray1.jpg');
+% I = imread('gray2.jpg');
 if numel(size(I)) == 3
     [J1] = Histogram_equalization(I, 1);
     [J2] = Histogram_equalization(I, 2);
