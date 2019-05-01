@@ -7,8 +7,6 @@ function output = my_edge(input, method)
 %you can use different methods to complete the edge detection function
 %the better the final result and the more methods you have used, you will get higher scores
 if strcmp(method, 'Canny')
-    %TODO: Canny Method
-    output = edge(input, 'approxcanny');
 else
     switch method
         case 'Roberts'
@@ -21,12 +19,27 @@ else
             wx = [-1, 0, 1; -1, 0, 1; -1, 0, 1];
             wy = [-1, -1, -1; 0, 0, 0; 1, 1, 1];
     end
-    gx = abs(imfilter(input, wx, 'replicate'));
-    gy = abs(imfilter(input, wy, 'replicate'));
-    g = gx.^2+ gy.^2;
-    %choose the threshold automatically
-    cutoff = 6 * sum(g(:), 'double') / numel(g);
-    output = g > cutoff;
-    output = bwmorph(output, 'thin', 10);
 end
 
+switch method
+    case {'Roberts', 'Prewitt', 'Sobel'}
+        if strcmp(method, 'Roberts')
+            wx = [0, 0, 0; 0, 1, 0; 0, 0, -1];
+            wy = [0, 0, 0; 0, 0, 1; 0, -1, 0];
+        end
+        if strcmp(method, 'Prewitt')
+            wx = [-1, 0, 1; -1, 0, 1; -1, 0, 1];
+            wy = [-1, -1, -1; 0, 0, 0; 1, 1, 1];
+        end
+        if strcmp(method, 'Sobel')
+            wx = [-1, 0, 1; -1, 0, 1; -1, 0, 1];
+            wy = [-1, -1, -1; 0, 0, 0; 1, 1, 1];
+        end
+        gx = abs(imfilter(input, wx, 'replicate'));
+        gy = abs(imfilter(input, wy, 'replicate'));
+        g = gx.^2+ gy.^2;
+        %choose the threshold automatically
+        cutoff = 6 * sum(g(:), 'double') / numel(g);
+        output = g > cutoff;
+    case 'Canny'
+end

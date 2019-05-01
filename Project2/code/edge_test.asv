@@ -10,8 +10,8 @@ clc; close all;
 % Load the test image
 % imgTest = im2double(imread('rubberband_cap.png'));
 % imgTest = im2double(imread('bird.png'));
-imgTest = im2double(imread('giraffe.png'));
-% imgTest = im2double(imread('lenna.tiff'));
+% imgTest = im2double(imread('giraffe.png'));
+imgTest = im2double(imread('lenna.tiff'));
 % imgTest = im2double(imread('noise.png'));
 % imgTest = im2double(imread('noise2.png'));
 imgTestGray = rgb2gray(imgTest);
@@ -24,18 +24,10 @@ imgEdge1 = my_edge(imgTestGray, 'Roberts');
 imgEdge2 = my_edge(imgTestGray, 'Prewitt'); 
 imgEdge3 = my_edge(imgTestGray, 'Sobel'); 
 imgEdge4 = my_edge(imgTestGray, 'Canny');
-figure; clf;
-imshow(imgEdge1);
-title('Roberts Method');
-figure; clf;
-imshow(imgEdge2);
-title('Prewitt Method');
-figure; clf;
-imshow(imgEdge3);
-title('Sobel Method');
-figure; clf;
-imshow(imgEdge4);
-title('Canny Method');
+subplot(2, 2, 1), imshow
+% imgEdge = edge(imgTestGray, 'Sobel');
+% figure;clf;
+% imshow(imgEdge);
 
 %using imtool, you select a object boundary to trace, and choose
 %an appropriateedge point as the start point 
