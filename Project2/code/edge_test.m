@@ -9,8 +9,8 @@ clc; close all;
 
 % Load the test image
 % imgTest = im2double(imread('rubberband_cap.png'));
-% imgTest = im2double(imread('bird.png'));
-imgTest = im2double(imread('giraffe.png'));
+imgTest = im2double(imread('bird.png'));
+% imgTest = im2double(imread('giraffe.png'));
 % imgTest = im2double(imread('lenna.tiff'));
 % imgTest = im2double(imread('noise.png'));
 % imgTest = im2double(imread('noise2.png'));
