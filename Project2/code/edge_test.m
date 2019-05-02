@@ -9,9 +9,12 @@ clc; close all;
 
 % Load the test image
 % imgTest = im2double(imread('rubberband_cap.png'));
-imgTest = im2double(imread('bird.png'));
+% imgTest = im2double(imread('bird.png'));
 % imgTest = im2double(imread('giraffe.png'));
-% imgTest = im2double(imread('lenna.tiff'));
+imgTest = im2double(imread('lenna.tiff'));
+% imgTest = im2double(imread('dva.jpg'));
+% imgTest = im2double(imread('moon.jpg'));
+% imgTest = im2double(imread('logo.jpg'));
 % imgTest = im2double(imread('noise.png'));
 % imgTest = im2double(imread('noise2.png'));
 imgTestGray = rgb2gray(imgTest);
@@ -40,22 +43,20 @@ title('Canny Method');
 %using imtool, you select a object boundary to trace, and choose
 %an appropriateedge point as the start point 
 
-%imtool(imgEdge);
-%edgePoints = [126, 232; 50, 92; 282, 227; 196, 79; 93, 296];
+%imtool(imgEdge4);
+% edgePoints = [126, 232; 50, 92; 282, 227; 196, 79; 93, 296];
 
 %now call your function my_edgelinking, you can use matlab bwtraceboundary 
 %function to see the last result as a reference first. please trace as many 
 %different object boundaries as you can, and choose different start edge points.
-
+% 
 % figure;clf;
 % background = imbinarize(imgTestGray, 1);
 % imshow(background);
-% 
-% [rows, cols] = size(edgePoints);
-% for i  = 1 : rows
-%     Bxpc = bwtraceboundary(imgEdge, [edgePoints(i, 1), edgePoints(i, 2)], 'N');
-%     hold on
-%     plot(Bxpc(:,2), Bxpc(:,1), 'w', 'LineWidth', 1);
-% end
 
-%Bxpc = my_edgelinking(img_edge, 197, 329);
+[rows, ~] = size(edgePoints);
+for i  = 1 : rows
+    Bxpc = my_edgelinking(imgEdge4, edgePoints(i, 1), edgePoints(i, 2));
+    hold on
+    plot(Bxpc(:,1), Bxpc(:,2), 'w', 'LineWidth', 1);
+end
