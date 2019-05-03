@@ -34,7 +34,6 @@ if strcmp(method, 'Canny')
     % Select the thresholds automatically
     counts = imhist(magGrad, 64);
     highThresh = find(cumsum(counts) > 0.7 * m * n, 1, 'first') / 18;
-%     highThresh = 0.3;
     lowThresh = 0.4 * highThresh;
     % Non-Maximum Suppression and Hysteresis Thresholding
     sector = zeros(m, n);
